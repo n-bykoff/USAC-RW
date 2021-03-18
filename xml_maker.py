@@ -71,18 +71,3 @@ def make_xml(tags, file_name):
 
     with open(f'{file_name}.xml', 'w') as f:
         f.write(string)
-
-
-if __name__ == '__main__':
-    tags = {'task': [1, [150, 1]], 
-    'system': [2, []], 
-    'meshMovement': [3, ['none']], 'timeStep': [3, [1.0]],
-    'plasticity': [3, ['PrandtlRaussCorrector']],
-    'matrixDecomposition': [3, ['analytical']], 
-    'bodies': [2, []], 'body': [3, ['cube']],
-    'mesh': [4, ['main', 'geo2', 'models/cube.geo', 0.2]], 
-    'material': [4, ['steel']],
-    'borderCondition': [2, ['ExternalForceCalculator', -2160, 0.0]], 
-    'area': [3, ['box', -10, 10, -10, 10, 4.9, 5.1]]}
-
-    make_xml(tags, 'testing_xml')
