@@ -1,0 +1,51 @@
+<task numberOfSnaps="40" stepsPerSnap="20" xmlns:ndi="gcm3d.plugins.ndi">
+        <system>
+                <prefix front="tsagi_2k21_validation_case1_034_"/>
+                <meshMovement type="none" />
+                <timeStep multiplier="0.5" />
+                <loadPlugin name="ndi" />
+        </system>
+        <bodies>
+                <body id="phased_linear_0">
+                        <rheology type="elastic" />
+                        <mesh id="phased_linear_0" type="geo2" file="models/phased_cube.geo" tetrSize="20" />
+                        <material id="steelA">
+                                <area type="box" minX="-100000" maxX="100000" minY="-100000" maxY="100000" minZ="-100000" maxZ="100000"/>
+                        </material>
+                        <material id="steelB">
+                                <area type="aberrator" minX="100" maxX="1100" minY="100" maxY="1100" flatZ="-100" curve="models/aberrator/1A-MARCH-12_actual_1D.txt"/>
+                        </material>
+                </body>
+        </bodies>
+        <materials>
+                <material name="steel123" rheology="isotropic">
+                        <la>34567</la>                        <mu>77000</mu>
+                        <rho>7.8</rho>
+                        <crackThreshold>INF</crackThreshold>
+                </material>
+                <material name="steel123" rheology="isotropic">
+                        <la>54321</la>                        <mu>160000</mu>
+                        <rho>5.8</rho>
+                        <crackThreshold>INF</crackThreshold>
+                </material>
+        </materials>
+        <borderCondition calculator="ConsumingBorderCalculator">
+                <area type="box" minX="-120" maxX="0.01" minY="-10000" maxY="10000" minZ="-10000" maxZ="10000" />
+        </borderCondition>
+        <borderCondition calculator="ConsumingBorderCalculator">
+                <area type="box" minX="-100" maxX="10000" minY="-10000" maxY="10000" minZ="-10000" maxZ="10000" />
+        </borderCondition>
+        <borderCondition calculator="ConsumingBorderCalculator">
+                <area type="box" minX="-10000" maxX="10000" minY="-10000" maxY="0.01" minZ="-10000" maxZ="10000" />
+        </borderCondition>
+        <borderCondition calculator="ConsumingBorderCalculator">
+                <area type="box" minX="-10000" maxX="10000" minY="1199.99" maxY="10000" minZ="-10000" maxZ="10000" />
+        </borderCondition>
+        <borderCondition calculator="ConsumingBorderCalculator">
+                <area type="box" minX="-10000" maxX="10000" minY="-10000" maxY="10000" minZ="699.99" maxZ="10000" />
+        </borderCondition>
+        <ndi:emitter name="phased_linear_0_" sensor="true" type="array" axis="x" n="15" F="500" dF="0">
+                <borderCondition calculator="ExternalForceCalculator" normalStress="-10000" tangentialStress="0.0" startTime="0.0" type="sinus_gauss" omega="500000" tau="3e-9" />
+                <area type="box" minX="100.0" maxX="500.0" minY="400.0" maxY="800.0" minZ="-1000" maxZ="-199.99" />
+        </ndi:emitter>
+</task>

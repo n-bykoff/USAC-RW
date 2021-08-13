@@ -1,19 +1,17 @@
-from xml_maker import make_xml
+from xml_refactor import *
+from json_module import *
 
 if __name__ == '__main__':
-    materials = ['steel', 'steel_2']
+    template_name = 'testing.xml'
 
-    for material in materials:
-        tags = {'task': [1, [150, 1, 'gcm3d.plugins.ndi']], 
-        'system': [2, []], 
-        'meshMovement': [3, ['none']],
-        'loadPlugin': [3, ['ndi']], 
-        'bodies': [2, []], 'body': [3, ['ndc_test_steel']],
-        'rheology': [4, ['elastic']],
-        'mesh': [4, ['ndc_test_steel', 'geo2', 'models/layer-10x10x1.geo', 0.05]], 
-        'material': [4, [material]],
-        'ndi:emitter': [2, ['emitter_and_sensor', 'true']], 
-        'area': [3, ['box', 5.2, 5.5, 5.2, 5.5, 0.99, 1.01]],
-        'values': [3, [-100.0]]}
+    with open(f'{template_name}', 'r') as f:
+        lines = f.readlines()
 
-        make_xml(tags, f'testing_xml({material})')
+    params_to_change = {'la': ('text', (12345, 54321, 34567, 33), (22, 28, 22, 28)),
+                        'material': (
+                            'property', 'name', ('steel123', 'steel123', 'steel123', 'steel123'), (21, 21, 27, 27)),
+                        'area': ('property', 'minX', (-120, -100, -120, -300), (35, 38, 35, 38))}
+
+    write_to_json_file(params_to_change, 'params_to_change')
+
+    new_lines = replace_tag_value_from_json(lines, 'params_to_change')
